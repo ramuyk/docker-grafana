@@ -13,11 +13,17 @@ This repository includes:
     
     This setup ensures that your Grafana configurations and data are preserved when the container is restarted.
   
-  - **Security Configuration**: Admin user and password are pre-configured for immediate access.
-
 - **Dockerfile**: Specifies the custom `grafana-prod` Docker image build process. This file includes the installation of the Zabbix plugin for Grafana. Feel free to modify the Dockerfile to incorporate additional plugins as needed.
 
 ## Getting Started
+
+### Important Preliminary Steps
+
+Before starting the quick setup, please note the following adjustments:
+
+1. **Important Note on Port Mapping**: The `docker-compose.yml` file contains a port mapping to `127.0.0.1`, limiting access to the localhost only. To make the service accessible from other machines or publicly, change the IP address in the port mapping. For instance, use `0.0.0.0` to bind to all network interfaces, updating the ports line to `- "0.0.0.0:8088:8088"` for broader network access.
+
+2. **Resource Limits**: The Docker container is configured to use a maximum of 8 GB of RAM and 4 CPU cores, optimizing performance while preventing overutilization of host resources. These settings can be adjusted inside the `docker-compose.yml` file to suit your specific needs or to align with the capabilities of your system.
 
 ### Quick Setup
 
@@ -31,15 +37,14 @@ This repository includes:
 2. **Build and Start Grafana**:
    Use the following command to build the Grafana image and start the service:
    ```bash
-   docker-compose up -d --build
+   docker compose up -d --build 
    ```
 
 3. **Access Grafana**:
-   Open a web browser and navigate to `http://localhost:10020` to access the Grafana web interface. Log in using the pre-configured admin credentials to start configuring your dashboards.
+   Open a web browser and navigate to `http://localhost:10020` to access the Grafana web interface. The pre-configured admin credentials are:
 
-## Customization
+   - **Username**: admin
+   - **Password**: admin
 
-### Updating Grafana
-
-To update Grafana to a newer version, update the Grafana image in the Dockerfile, rebuild the image, and restart the container with the updated configuration.
+   Upon first login with these credentials, the Grafana frontend will prompt you to change them for security reasons. If the credentials have already been customized, you will be logged in directly.
 

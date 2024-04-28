@@ -14,6 +14,11 @@ services:
       - grafana-storage-lib:/var/lib/grafana
       - grafana-storage-etc:/etc/grafana
     container_name: grafana-prod
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4'
     restart: always
 
 volumes:
